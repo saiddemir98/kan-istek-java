@@ -30,6 +30,7 @@ public class HospitalService {
 
     public AddressDto updateHospitalId(AddressDto addressDto) {
         //TODO burası dolduralacak
+        System.out.println("asdasd");
         return null;
     }
 }
