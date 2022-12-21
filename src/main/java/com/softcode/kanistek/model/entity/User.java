@@ -31,19 +31,9 @@ public class User extends BaseEntity implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private ArrayList<Authority> authorities;
 
-
-
-
     @Override
     public String getUsername() {
         return this.email;
     }
-
-
-
-
-
-
-
 
 }
