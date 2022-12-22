@@ -2,7 +2,9 @@ package com.softcode.kanistek.service;
 
 import com.softcode.kanistek.helper.JwtHelper;
 import com.softcode.kanistek.model.dto.AddressDto;
+import com.softcode.kanistek.model.entity.Authority;
 import com.softcode.kanistek.model.entity.User;
+import com.softcode.kanistek.model.request.AuthorityAndEmail;
 import com.softcode.kanistek.model.request.UserRegisterRequest;
 import com.softcode.kanistek.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +51,15 @@ public class UserService implements UserDetailsService {
         String token = jwtHelper.generateToken(myPrinciple.getUsername());
         return token;
     }
+
+    public boolean isUserAlreadyExists(String email){
+        User user = userRepository.findByEmail(email);
+        if (user!=null){
+            return true;}
+        else return false;
+    }
+
+
 
     public AddressDto updateAddress(AddressDto addressDto) {
         return null;

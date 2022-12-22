@@ -12,11 +12,6 @@ import java.util.List;
 @ControllerAdvice
 public class ExceptionHandling {
 
-
-
-
-
-
     @ExceptionHandler(value = DataIntegrityViolationException.class)
     public ResponseEntity<BaseResponse> runtimeException(DataIntegrityViolationException exception){
         ArrayList<String> messages = new ArrayList<>();
@@ -27,6 +22,12 @@ public class ExceptionHandling {
     @ExceptionHandler(value = RuntimeException.class)
     public ResponseEntity<BaseResponse> runtimeException(RuntimeException exception){
         System.out.println(exception);
+        return BaseResponse.error(null,400);
+    }
+
+    @ExceptionHandler(value = Exception.class)
+    public ResponseEntity<BaseResponse> userAlreadyExists(Exception e){
+        //Sistemin verdiği hataya göre exception yazılacak
         return BaseResponse.error(null,400);
     }
 
