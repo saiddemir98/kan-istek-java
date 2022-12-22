@@ -10,10 +10,13 @@ import com.softcode.kanistek.model.request.LoginRequest;
 import com.softcode.kanistek.model.request.UserRegisterRequest;
 import com.softcode.kanistek.repository.UserRepository;
 import com.softcode.kanistek.service.UserService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,22 +28,16 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final UserService userService;
-    private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
-    private final ModelMapper modelMapper;
     private final ExceptionHandling exceptionHandling;
 
     @PostMapping("/register")
-    public ResponseEntity<BaseResponse<UserDto>> register(@RequestBody UserRegisterRequest request){
-        if (userService.isUserAlreadyExists(request.getEmail())){
-            //throw exceptionHandling.userAlreadyExists();
-            throw new RuntimeException();
-        }
-        else{
-        userService.register(request);
-        UserDto userDto = new UserDto();
-        modelMapper.map(userDto, request);
+    public ResponseEntity<BaseResponse<UserDto>> register(@Valid @RequestBody UserRegisterRequest request) throws JpaSystemException {
+        if (!userService.isUserAlreadyExists(request.getEmail())){
+        User user = userService.register(request);
+        UserDto userDto = userService.createUserDto(user);
         return BaseResponse.ok(userDto,201);}
+        return null;
     }
     @PostMapping("/login")
     public ResponseEntity<BaseResponse<String>> login(@RequestBody LoginRequest request){

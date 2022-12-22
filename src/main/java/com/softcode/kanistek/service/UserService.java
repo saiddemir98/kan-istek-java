@@ -2,6 +2,7 @@ package com.softcode.kanistek.service;
 
 import com.softcode.kanistek.helper.JwtHelper;
 import com.softcode.kanistek.model.dto.AddressDto;
+import com.softcode.kanistek.model.dto.UserDto;
 import com.softcode.kanistek.model.entity.Authority;
 import com.softcode.kanistek.model.entity.User;
 import com.softcode.kanistek.model.request.AuthorityAndEmail;
@@ -33,6 +34,12 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
+    public UserDto createUserDto (User user){
+        UserDto userDto = new UserDto();
+        modelMapper.map(user, userDto);
+        return userDto;
+    }
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
@@ -40,9 +47,10 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public void register(UserRegisterRequest request) {
+    public User register(UserRegisterRequest request) {
         User user = modelMapper.map(request,User.class);
         this.create(user);
+        return user;
     }
 
 
@@ -54,8 +62,7 @@ public class UserService implements UserDetailsService {
 
     public boolean isUserAlreadyExists(String email){
         User user = userRepository.findByEmail(email);
-        if (user!=null){
-            return true;}
+        if (user!=null){return true;}
         else return false;
     }
 
