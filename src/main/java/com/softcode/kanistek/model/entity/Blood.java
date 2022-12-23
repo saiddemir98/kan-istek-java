@@ -3,15 +3,16 @@ package com.softcode.kanistek.model.entity;
 import com.softcode.kanistek.base.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-public class District extends BaseEntity {
+@AllArgsConstructor
+@NoArgsConstructor
+public class Blood extends BaseEntity {
     @Column(nullable = false)
-    private String name;
-    @ManyToOne
-    private City city;
+    private String blood;
+
 }

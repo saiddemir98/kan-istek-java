@@ -25,12 +25,13 @@ public class AuthController {
 
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
-
+/*
     @PostMapping("/register")
-    public ResponseEntity<BaseResponse<Object>> register(@RequestBody UserRegisterRequest request){
-        userService.register(request);
-        return BaseResponse.ok(null,201);
-    }
+    public ResponseEntity<BaseResponse<UserDto>> register(@RequestBody UserRegisterRequest request){
+        //TODO burayı doldurun
+        UserDto userDto = userService.register(request);
+        return BaseResponse.ok(userDto,201);
+    }*/
     @PostMapping("/login")
     public ResponseEntity<BaseResponse<String>> login(@RequestBody LoginRequest request){
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword());

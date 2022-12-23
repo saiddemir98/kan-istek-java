@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=softcode
+      - POSTGRES_PASSWORD=softcode123
+      - POSTGRES_DB=softcode
+    ports:
+      - "5432:5432"
